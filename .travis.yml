@@ -1,16 +1,24 @@
 jobs:
   include:
-    - name: "Flutter tests"
-      os: linux
-      dist: bionic
-      script: ./tool/travis_script.sh
-      env: FLUTTER_VERSION=stable
+  - name: Flutter tests
+    os: linux
+    dist: bionic
+    script: "./tool/travis_script.sh"
+    env: FLUTTER_VERSION=stable
 
 before_script:
-  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_VERSION
-  - ./flutter/bin/flutter doctor
-  - chmod +x tool/travis_script.sh
+- git clone https://github.com/flutter/flutter.git -b $FLUTTER_VERSION
+- "./flutter/bin/flutter doctor"
+- chmod +x tool/travis_script.sh
 
 cache:
   directories:
-    - $HOME/shared/.pub-cache
+  - "$HOME/shared/.pub-cache"
+
+branches:
+    only:
+    - master
+
+notifications:
+  slack:
+    secure: mxRlCwLt0Ij18kxxK7kDUZ7vYBfmayUvPuOg6TaEVobCvUJE+dNqK/Xt05Rbug1Qpt8F03IpSKS8JmrMeOt6rAtr58MJaLRBpuZiPoMHWT1fkpYvyF/sDwhKTQJCobpYow72bjjXb8aHqqPBR2h/oOqo2+8KoUzZzeRBWm09Gr4zpUQ8ZHffe2pHeomGuW9xUP+IXlip9tWmxAtbjvmTgb28SdVwGvAtwab9TMybvAXMZ43/T+NKZ7pactBh102sit7AXwpE8WPnhDix7CUFYLRligszxrDst2/t0qqbd/iP6JOHmINsroKMcun2wJ1/MU+CbXbXLQVIXv3GV+HwfIrOBXKe+RYENTllNR1Jrw/6nKLrSJXUbY4oruLtJhU2GXzX/QNnARCiaP35mCqF4B+MsVWAh8fZ+V4VHFG2Y4q7Hh/FyYMCtLD45zWZNiOsob1mJfBITd1pvVFBfex66qpHq87j15e3gyr4YGkDfOhRHoOREYjfpHAxr7BIzz6tPqIo3BeUwWf06y4RzXrjeLo4jMb/3jSaSX0SN9HBYV03Dt63oj7fNsJ3aYcl1/Y9jfoGoFDjjOdhdiuVes9ZQBNgwb9/HVXBbA7wla+rmwZYOLAzGUZsPAf+lDsAgYHf+JCFOtOJ01m6bLOTwvJ8h/6vZUDaO4KqV/1FLrMDUbc=
