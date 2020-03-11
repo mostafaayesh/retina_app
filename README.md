@@ -1,4 +1,5 @@
-# RETINA (Real-Time Indoor Navigation Assistant)
+# RETINA (Real-Time Indoor Navigation Assistant) 
+[![Build Status](https://travis-ci.org/MostafaAyesh/retina_app.svg?branch=master)](https://travis-ci.org/MostafaAyesh/retina_app)
 
 RETINA aims to make indoor navigation more accessible for the visually impaired. It is a final year capstone project for Mechatronics Engineering at McMaster University.
 
