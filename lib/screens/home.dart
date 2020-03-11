@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
           CardTile(
             leading: Icon(Icons.near_me),
             titleText: "Nearby Rooms",
-            semanticsLabel: "List Nearby Rooms",
+            semanticsLabel: "List nearby rooms",
             onTap: () => Get.toNamed("/nearby"),
           ),
           CardTile(

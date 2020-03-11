@@ -1,0 +1,16 @@
+jobs:
+  include:
+    - name: "Flutter tests"
+      os: linux
+      dist: bionic
+      script: ./tool/travis_script.sh
+      env: FLUTTER_VERSION=stable
+
+before_script:
+  - git clone https://github.com/flutter/flutter.git -b $FLUTTER_VERSION
+  - ./flutter/bin/flutter doctor
+  - chmod +x tool/travis_script.sh
+
+cache:
+  directories:
+    - $HOME/shared/.pub-cache
