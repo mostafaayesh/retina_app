@@ -5,6 +5,7 @@ RETINA aims to make indoor navigation more accessible for the visually impaired.
 ---
 
 ## The Team
+
 [Mostafa Ayesh](https://github.com/MostafaAyesh)
 
 [Bradley Kohler](https://github.com/studentbrad) 
