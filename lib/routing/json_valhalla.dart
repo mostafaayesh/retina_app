@@ -206,9 +206,7 @@ List<List<double>> polylineDecode(String encodedShape){
   return coordlist;
 }
 
-List<double> coordtoDis(List<List<double>> coordlist){
 
-}
 Future<List<Maneuver>> loadJsonAsset(String assetloc) async{
   var jsonTxt = await rootBundle.loadString(assetloc);
   Map<String, dynamic> jsonResponse = json.decode(jsonTxt);
@@ -219,8 +217,8 @@ Future<List<Maneuver>> loadJsonAsset(String assetloc) async{
 
 }
 
-Future<String> fetchRouteFromNetwork(List<double> startpoint, List<double> endpoint) async{
-  var url = "http://130.113.70.130:8102/route";
+Future<String> fetchRouteFromNetwork(String ip, List<double> startpoint, List<double> endpoint) async{
+  var url = "http://"+ip+"/route";
   var body = json.encode({
     "verbose":true,
     "locations":[
