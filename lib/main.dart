@@ -6,8 +6,6 @@ import 'package:retina/app_routes.dart';
 import 'package:retina/screens/home.dart';
 import 'package:retina/themes/dark_theme.dart';
 import 'package:retina/themes/light_theme.dart';
-import 'package:retina/routing/json_valhalla.dart';
-import 'package:retina/routing/json_nominatim.dart';
 
 void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
