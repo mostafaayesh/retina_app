@@ -46,7 +46,7 @@ class NominatimOutput {
       );
 }
 
-Future<GlobalCoordinate> getGlobalCoordinates(String host, String query) async {
+Future<GlobalCoordinates> getGlobalCoordinates(String host, String query) async {
   Response response = await Dio(BaseOptions(
     responseType: ResponseType.plain,
   )).get(
