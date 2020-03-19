@@ -21,6 +21,8 @@ dependencies:
     sdk: flutter
   get: ^1.10.5
   provider: ^4.0.4
+  flutter_tts: ^0.9.0
+  logging: ^0.11.4
 
 
 dev_dependencies:
