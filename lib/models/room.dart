@@ -1,50 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:retina/routing/json_nominatim.dart';
+import 'package:sqfentity_gen/sqfentity_gen.dart';
+import 'package:sqfentity/sqfentity.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class Room {
-  String name = "placeholder";
-  double x;
-  double y;
-  double latitude;
-  double longitude;
-  String type = "general";
-  String info = "No information available";
+part 'room.g.dart';
 
-  Room({
-    this.name,
-    this.x,
-    this.y,
-    this.latitude,
-    this.longitude,
-    this.type,
-    this.info,
-  });
+const tableRoom = SqfEntityTable(
+    tableName: 'Room',
+    primaryKeyName: 'name',
+    primaryKeyType: PrimaryKeyType.text,
+    relationType: null,
+    useSoftDeleting: false,
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+    fields: [
+      SqfEntityField('x', DbType.real),
+      SqfEntityField('y', DbType.real),
+      SqfEntityField('latitude', DbType.real),
+      SqfEntityField('longitude', DbType.real),
+      SqfEntityField('type', DbType.text),
+      SqfEntityField('info', DbType.text),
+    ]);
+// END TABLES
 
-  Map<String, dynamic> toMap(){
-    var map = <String, dynamic>{
-      'name':name,
-      'x':x,
-      'y':y,
-      'latitude':latitude,
-      'longitude':longitude,
-      'type':type,
-      'info':info,
-    };
-    return map;
-  }
+// BEGIN DATABASE MODEL
+@SqfEntityBuilder(itbdb)
+const itbdb = SqfEntityModel(
+  modelName: 'Itbdb',
+  databaseName: 'itb.db',
+  databaseTables: [
+    tableRoom,
+  ],
+  bundledDatabasePath: 'assets/itb.db',
+); // END itb.db MODEL
 
-  Room.frommap(Map<String, dynamic> map){
-    name = map['id'];
-    x = map['x'];
-    y = map['y'];
-    latitude = map['latitude'];
-    longitude = map['longitude'];
-    type = map['type'];
-    info = map['info'];
-  }
-}
-
-class RoomModel extends ChangeNotifier {
+class RoomNotifier extends ChangeNotifier {
   Room room;
-  RoomModel({this.room});
+  RoomNotifier({this.room});
 }

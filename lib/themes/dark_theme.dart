@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
+  accentColor: Colors.white,
   cardTheme: CardTheme(
     color: Colors.white,
   ),
