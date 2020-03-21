@@ -12,7 +12,7 @@ class RoomScreen extends StatefulWidget {
 class _RoomScreenState extends State<RoomScreen> {
   @override
   Widget build(BuildContext context) {
-    final room_model = Provider.of<RoomModel>(context);
+    final roomNotifier = Provider.of<RoomNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,8 +24,8 @@ class _RoomScreenState extends State<RoomScreen> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          "Room ${room_model.room.name}",
-          semanticsLabel: "Room ${room_model.room.name}",
+          "Room ${roomNotifier.room.name}",
+          semanticsLabel: "Room ${roomNotifier.room.name}",
         ),
         centerTitle: true,
         actions: <Widget>[
@@ -44,10 +44,10 @@ class _RoomScreenState extends State<RoomScreen> {
         children: <Widget>[
           CardTile(
             titleText:
-                "${room_model.room.info == null ? "No Information Available" : room_model.room.info}", // TODO: Rooms with no information should be handled elsewhere
+                "${roomNotifier.room.info == null ? "No Information Available" : roomNotifier.room.info}", // TODO: Rooms with no information should be handled elsewhere
           ),
           CardTile(
-            titleText: "Navigate to Room ${room_model.room.name}",
+            titleText: "Navigate to Room ${roomNotifier.room.name}",
             textStyle: TextStyle(fontWeight: FontWeight.bold),
             onTap: () => Get.toNamed("/navigation"),
           )

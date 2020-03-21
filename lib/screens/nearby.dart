@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:retina/models/room.dart';
-import 'package:retina/widgets/card_tile.dart';
 import 'package:retina/widgets/room_widgets.dart';
 
 class NearbyScreen extends StatefulWidget {
@@ -11,27 +11,12 @@ class NearbyScreen extends StatefulWidget {
 }
 
 class _NearbyScreenState extends State<NearbyScreen> {
-  final Room room_101 = Room(
-    name: "101",
-    x: 2.3,
-    y: 1.4,
-    info: "Requires Keycard Access",
-  );
-  final Room room_102 = Room(
-    name: "102",
-    x: 5.3,
-    y: 2.4,
-    info: "Requires Physical Key",
-  );
-  final Room room_103 = Room(
-    name: "103",
-    x: 3.3,
-    y: 6.4,
-  );
-
+  Future getNearbyRooms() async {
+    return await Room().select().toList();
+  }
   @override
   Widget build(BuildContext context) {
-    var roomModel = Provider.of<RoomModel>(context);
+    var roomNotifier = Provider.of<RoomNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,32 +30,28 @@ class _NearbyScreenState extends State<NearbyScreen> {
         ),
         centerTitle: true,
       ),
-      // TODO: Use ListViewBuilder
-      body: ListView(
-        padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
-        children: <Widget>[
-          RoomTile(
-            room: room_101,
-            onTap: () {
-              roomModel.room = room_101;
-              Get.toNamed("/roominfo");
+      body: FutureBuilder(
+        future: getNearbyRooms(),
+        initialData: [],
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.none &&
+              snapshot.hasData == null) {
+            return ListView();
+          }
+          return ListView.builder(
+            padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
+            itemCount: snapshot.data.length,
+            itemBuilder: (BuildContext context, int index) {
+              return RoomTile(
+                room: snapshot.data[index],
+                onTap: () {
+                  roomNotifier.room = snapshot.data[index];
+                  Get.toNamed("/roominfo");
+                },
+              );
             },
-          ),
-          RoomTile(
-            room: room_102,
-            onTap: () {
-              roomModel.room = room_102;
-              Get.toNamed("/roominfo");
-            },
-          ),
-          RoomTile(
-            room: room_103,
-            onTap: () {
-              roomModel.room = room_103;
-              Get.toNamed("/roominfo");
-            },
-          ),
-        ],
+          );
+        },
       ),
     );
   }

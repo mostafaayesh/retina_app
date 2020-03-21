@@ -18,7 +18,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   final inst4 = Instruction(direction: Direction.FORWARD, distance: 5.0);
   @override
   Widget build(BuildContext context) {
-    final room_model = Provider.of<RoomModel>(context);
+    final roomNotifier = Provider.of<RoomNotifier>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -30,8 +30,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
             ),
             onPressed: () => Get.back()),
         title: Text(
-          "Navigating to ${room_model.room.name}",
-          semanticsLabel: "Navigating to Room ${room_model.room.name}",
+          "Navigating to ${roomNotifier.room.name}",
+          semanticsLabel: "Navigating to Room ${roomNotifier.room.name}",
         ),
         centerTitle: true,
         actions: <Widget>[
@@ -61,7 +61,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             InstructionTile(
               instruction: inst4,
             ),
-            CardTile(titleText: "Room ${room_model.room.name} should be on your Right",)
+            CardTile(titleText: "Room ${roomNotifier.room.name} should be on your Right",)
           ],
         ),
       ),

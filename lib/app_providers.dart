@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 
-import 'models/room.dart';
+import 'package:retina/models/room.dart';
 
 final app_providers = [
-  ChangeNotifierProvider(create: (context) => RoomModel()),
+  ChangeNotifierProvider(create: (context) => RoomNotifier()),
 ];

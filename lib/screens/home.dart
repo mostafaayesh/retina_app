@@ -26,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Icon(Icons.search),
             titleText: "Search Rooms",
             semanticsLabel: "Search all rooms",
+            onTap: () => Get.toNamed("/search"),
           ),
           CardTile(
             leading: Icon(Icons.near_me),
