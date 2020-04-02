@@ -7,6 +7,8 @@ import 'package:retina/widgets/card_tile.dart';
 import 'package:retina/widgets/instruction.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../widgets/instruction.dart';
+
 class NavigationScreen extends StatefulWidget {
   @override
   _NavigationScreenState createState() => _NavigationScreenState();
@@ -79,21 +81,17 @@ class _NavigationScreenState extends State<NavigationScreen> {
       body: Center(
         child: ListView(
           padding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 0.0),
+
           children: <Widget>[
-            CurrentInstruction(
-              instruction: instList[0],
-            ),
-            InstructionTile(
-              instruction: instList[1],
-            ),
-            InstructionTile(
-              instruction: instList[2],
-            ),
-            InstructionTile(
-              instruction: instList[3],
-            ),
-            InstructionTile(
-              instruction: instList[4],
+            if( instList.isNotEmpty )
+              CurrentInstruction(
+                  instruction: instList[0],
+              ),
+            for( int i=1; i < instList.length; i++ )
+            (
+                InstructionTile(
+                  instruction: instList[i],
+                )
             ),
             CardTile(titleText: "Room ${room_model.room.name} should be on your Right",),
 
@@ -108,18 +106,17 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 
   positionUpdate(BuildContext context, final room_model) async {
-    debugPrint( "On Press" );
 //    if( instNum < getUpdate(100, 20, 98, 23, instNum) )
-        {
-      instNum++;
-      debugPrint('$instNum');
-      flutterTts.speak( instList[instNum].text );
-    }
-    final result = await Navigator.push((context),
-      MaterialPageRoute(builder: (context) => build(context) ) , );
-    setState(() {
+    if( instList.length > 1)
+    {
+      flutterTts.speak( instList[1].text );
+      instList = instList.sublist(1);
+      final result = await Navigator.push((context),
+        MaterialPageRoute(builder: (context) => build(context) ) , );
+      setState(() {
 
-    });
+      });
+    }
   }
 }
 
