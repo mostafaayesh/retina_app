@@ -170,6 +170,20 @@ class Location {
       );
 }
 
+class Instruction{
+  String instruction;
+  double length;
+  String preverbalInstruction;
+  String postverbalInstruction;
+  String alertInstruction;
+
+  Instruction(this.instruction,
+    this.length,
+    this.preverbalInstruction,
+    this.postverbalInstruction,
+    this.alertInstruction);
+}
+
 List<List<double>> polylineDecode(String encodedShape) {
   int index = 0;
   int lat = 0;
@@ -220,7 +234,7 @@ Future<List<Maneuver>> loadJsonAsset(String assetloc) async {
   return legs[0].maneuvers;
 }
 
-Future<String> fetchRouteFromNetwork(String host, GlobalCoordinates startpoint,
+Future<Trip> fetchRouteFromNetwork(String host, GlobalCoordinates startpoint,
     GlobalCoordinates endpoint) async {
   Response response = await Dio(BaseOptions(responseType: ResponseType.plain))
       .post("http://$host/route", data: {
@@ -237,7 +251,21 @@ Future<String> fetchRouteFromNetwork(String host, GlobalCoordinates startpoint,
         'HTTP Error: ${response.statusCode} ${response.statusMessage}');
   }
   ValhallaOutput valData = ValhallaOutput.fromJson(json.decode(response.data));
-  Trip trip = valData.trip;
-  List<Leg> legs = trip.legs;
-  return legs[0].shape;
+  return valData.trip;
+  //List<Leg> legs = trip.legs;
+  //return legs[0].shape;
+}
+
+String getShape(Trip trip){
+    return trip.legs[0].shape;
+}
+
+List<Instruction> getInstructions(Trip trip){
+  List<Instruction> newInstruction= List<Instruction>();
+  trip.legs[0].maneuvers.forEach((x)=>newInstruction.add(
+      Instruction(x.instruction,x.length,x.verbalPreTransitionInstruction,
+          x.verbalPostTransitionInstruction,x.verbalTransitionAlertInstruction)));
+
+
+  return newInstruction;
 }
