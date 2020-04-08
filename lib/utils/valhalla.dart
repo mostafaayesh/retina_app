@@ -177,11 +177,11 @@ class Instruction{
   String postverbalInstruction;
   String alertInstruction;
 
-  Instruction(this.instruction,
+  Instruction({this.instruction,
     this.length,
     this.preverbalInstruction,
     this.postverbalInstruction,
-    this.alertInstruction);
+    this.alertInstruction});
 }
 
 List<List<double>> polylineDecode(String encodedShape) {
@@ -263,8 +263,11 @@ String getShape(Trip trip){
 List<Instruction> getInstructions(Trip trip){
   List<Instruction> newInstruction= List<Instruction>();
   trip.legs[0].maneuvers.forEach((x)=>newInstruction.add(
-      Instruction(x.instruction,x.length,x.verbalPreTransitionInstruction,
-          x.verbalPostTransitionInstruction,x.verbalTransitionAlertInstruction)));
+      Instruction(instruction:x.instruction,
+          length:x.length,
+          preverbalInstruction:x.verbalPreTransitionInstruction,
+          postverbalInstruction:x.verbalPostTransitionInstruction,
+          alertInstruction:x.verbalTransitionAlertInstruction)));
 
 
   return newInstruction;
