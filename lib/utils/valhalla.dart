@@ -282,10 +282,10 @@ Direction getDirectionFromValhalla(String valIns){
 }
 List<Instruction> getInstructions(Trip trip){
   List<Instruction> newInstruction= List<Instruction>();
-  trip.legs[0].maneuvers.forEach((x)=>newInstruction.add(
+  trip.legs[0].maneuvers.forEach((x){if(x.length!=0.0)newInstruction.add(
       Instruction(direction:getDirectionFromValhalla(x.instruction),
           distance:x.length*100,
-  )));
+  ));});
   return newInstruction;
 
 

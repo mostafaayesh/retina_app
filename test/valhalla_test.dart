@@ -8,5 +8,5 @@ void main() async{
   GlobalCoordinates endpoint = new GlobalCoordinates(latitude:43.258473, longitude:-79.921178);
   Trip trip = await fetchRouteFromNetwork(host, startpoint, endpoint);
   List<Instruction> instruction = getInstructions(trip);
-  instruction.forEach((ins)=>print('${ins.direction}'+ ins.distance.toString()));
+  instruction.forEach((ins)=>print(ins.text));
 }
