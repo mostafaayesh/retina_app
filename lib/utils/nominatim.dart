@@ -45,8 +45,7 @@ class NominatimOutput {
         importance: json["importance"].toDouble(),
       );
 }
-
-Future<GlobalCoordinates> getGlobalCoordinates(String host, String query) async {
+Future<NominatimOutput> getNominatimOutput(String host, String query) async{
   Response response = await Dio(BaseOptions(
     responseType: ResponseType.plain,
   )).get(
@@ -61,10 +60,15 @@ Future<GlobalCoordinates> getGlobalCoordinates(String host, String query) async 
     throw Exception(
         'HTTP error: ${response.statusCode} ${response.statusMessage}');
   }
-  NominatimOutput nominatimOutput =
-      NominatimOutput.fromJson(json.decode(response.data.toString())[0]);
+
+  return NominatimOutput.fromJson(json.decode(response.data.toString())[0]);
+}
+
+GlobalCoordinates getGlobalCoordinate(NominatimOutput nout){
   return GlobalCoordinates(
-    latitude: double.parse(nominatimOutput.lat),
-    longitude: double.parse(nominatimOutput.lon),
+    latitude: double.parse(nout.lat),
+    longitude: double.parse(nout.lon),
   );
 }
+
+

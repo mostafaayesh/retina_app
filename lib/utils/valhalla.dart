@@ -3,7 +3,7 @@ import 'dart:async' show Future;
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:retina/utils/attitude.dart';
-
+import 'package:retina/widgets/instruction.dart';
 class ValhallaOutput {
   Trip trip;
 
@@ -170,18 +170,18 @@ class Location {
       );
 }
 
-class Instruction{
+class valInstruction{
   String instruction;
   double length;
   String preverbalInstruction;
   String postverbalInstruction;
   String alertInstruction;
 
-  Instruction(this.instruction,
+  valInstruction({this.instruction,
     this.length,
     this.preverbalInstruction,
     this.postverbalInstruction,
-    this.alertInstruction);
+    this.alertInstruction});
 }
 
 List<List<double>> polylineDecode(String encodedShape) {
@@ -260,12 +260,33 @@ String getShape(Trip trip){
     return trip.legs[0].shape;
 }
 
-List<Instruction> getInstructions(Trip trip){
-  List<Instruction> newInstruction= List<Instruction>();
+List<valInstruction> getValInstructions(Trip trip){
+  List<valInstruction> newInstruction= List<valInstruction>();
   trip.legs[0].maneuvers.forEach((x)=>newInstruction.add(
-      Instruction(x.instruction,x.length,x.verbalPreTransitionInstruction,
-          x.verbalPostTransitionInstruction,x.verbalTransitionAlertInstruction)));
+      valInstruction(instruction:x.instruction,
+          length:x.length,
+          preverbalInstruction:x.verbalPreTransitionInstruction,
+          postverbalInstruction:x.verbalPostTransitionInstruction,
+          alertInstruction:x.verbalTransitionAlertInstruction)));
 
 
   return newInstruction;
+}
+Direction getDirectionFromValhalla(String valIns){
+  if(valIns.contains('Turn')){
+    if(valIns.contains('right'))return Direction.RIGHT;
+    else if(valIns.contains('left')) return Direction.LEFT;
+  }
+  return Direction.FORWARD;
+
+}
+List<Instruction> getInstructions(Trip trip){
+  List<Instruction> newInstruction= List<Instruction>();
+  trip.legs[0].maneuvers.forEach((x)=>newInstruction.add(
+      Instruction(direction:getDirectionFromValhalla(x.instruction),
+          distance:x.length*100,
+  )));
+  return newInstruction;
+
+
 }
